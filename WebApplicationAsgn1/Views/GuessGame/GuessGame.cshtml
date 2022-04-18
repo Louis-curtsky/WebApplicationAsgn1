@@ -9,24 +9,17 @@
         <th>@ViewBag.CookieHighest</th>
     </tr>
     <tr>
-        <th>Number to Guess</th>
+        <th>The NUMBER is</th>
         <th>@ViewBag.RandNums</th>
     </tr>
     <tr>
-        <th>Number Guessed</th>
-        <td>@ViewBag.NumGuess</td>
+        <th>Number of Guess</th>
+        <td>@ViewData["NumGuess"]</td>
     </tr>
     <tr>
         <th>Message</th>
         <th>
-            @if (ViewBag.Correct == true)
-            {
-                <h3 class="green">@ViewBag.ExceptionMsg</h3>
-            }
-            else
-            {
-                <h3 class="warning">@ViewBag.ExceptionMsg</h3>
-            }
+         <h3 class="@ViewBag.ColorCode">@ViewData["Msg"]</h3>
         </th>
     </tr>
 </table>

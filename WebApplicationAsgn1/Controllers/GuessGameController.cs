@@ -11,63 +11,96 @@ namespace WebApplicationAsgn1.Controllers
     public class GuessGameController : Controller
     {
         RandomService _randomService;
-        public string RandNums;
-        public bool CorrectGuess;
         public GuessGameController()
         {
             _randomService = new RandomService();
         }
 
         [HttpGet]
-        public IActionResult GuessGame()
+        public IActionResult GuessGame(string msg, int numguess)
         {
-            // Set Sessions to store Random Number
-
-
-            // Set Cookies to store Highest Score
+            string theGuess = "";
+            string randNums = HttpContext.Session.GetString("RandNums");
+            if (string.IsNullOrWhiteSpace(randNums))
+            {
+                randNums = _randomService.GenerateNum();
+                HttpContext.Session.SetString("RandNums", randNums);
+                theGuess = randNums;
+            }
+            else
+                theGuess = numguess.ToString();
 
             string cookieHighest = Request.Cookies["NumberOfRight"];
-            if (cookieHighest == null)
-            {
-                cookieHighest = "0";
-            }
             ViewBag.CookieHighest = cookieHighest;
-            // For debugging use
-            return View();
 
+            ViewData["Msg"] = msg;
+
+            if (msg != null)
+            {
+                if (msg.Contains("CORRECT"))
+                {
+                    ViewBag.ColorCode = "green";
+                    ViewBag.RandNums = numguess.ToString();
+                }
+                else
+                {
+                    ViewBag.ColorCode = "warning";
+                    ViewBag.RandNums = "";
+                }
+            }
+            ViewData["NumGuess"] = numguess.ToString();
+            // For debugging use
+
+            return View();
         }
 
         [HttpPost]
         public IActionResult CreateGuess(int guessnum)
         {
+            bool correctGuess = false;
+            string msg;
+ 
             CookieOptions option = new CookieOptions();
             option.Expires = DateTime.Now.AddMinutes(5);
 
             string randNums = HttpContext.Session.GetString("RandNums");
 
-  //          RandNums = randNums;
+            //          RandNums = randNums;
             if (!string.IsNullOrWhiteSpace(randNums))
             {
-                CorrectGuess= _randomService.GuessStart(guessnum);
+                correctGuess= _randomService.GuessStart(randNums, guessnum);
             } else
             {
                 randNums = _randomService.GenerateNum();
                 HttpContext.Session.SetString("RandNums", randNums);
-                CorrectGuess = _randomService.GuessStart(randNums, guessnum);
+                correctGuess = _randomService.GuessStart(randNums, guessnum);
             }
-            ViewBag.RandNums = randNums;
-            if  (CorrectGuess == true)
+            string cookieHighest = Request.Cookies["NumberOfRight"];
+            if (cookieHighest == null)
             {
-                //Response.Cookies.Add(new HttpCookie("Day", questions.Day));
-                Response.Cookies.Append("NumberOfRight", _randomService.numberRight.ToString());
-                HttpContext.Session.SetString("RandNums", "");
-                CorrectGuess = false;
+                cookieHighest = "0";
             }
-            //            RandNums = randNums;
-            ViewBag.NumGuess = guessnum.ToString();
+            string itIsToo = "";
+            _randomService.randNumSR = int.Parse(randNums);
+            itIsToo = _randomService.GuessStart(guessnum);
+            int numberRight = int.Parse(cookieHighest);
+            if  (correctGuess == true)
+            {
+                numberRight += 1;
+                //Response.Cookies.Add(new HttpCookie("Day", questions.Day));
+                Response.Cookies.Append("NumberOfRight", numberRight.ToString());
+                HttpContext.Session.SetString("RandNums", "");
+                msg = "Congratulation, your guess is CORRECT!!!";
+                correctGuess = false;
+            } else
+            {
+                msg = $"Oops! Thats incorrect! {itIsToo}";
+            }
+ 
+            ViewBag.CookieHighest = cookieHighest;
 
-            return RedirectToAction(nameof(GuessGame));
-//            return View();
+            return RedirectToAction("GuessGame", new { Msg = msg,
+                NumGuess = guessnum }) ; 
         }
     }
 }
