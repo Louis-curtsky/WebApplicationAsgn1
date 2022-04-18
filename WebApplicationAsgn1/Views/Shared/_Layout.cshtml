@@ -1,13 +1,30 @@
 ﻿<!DOCTYPE html>
 
-<html  lang="en">
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width" charset="UTF-8" />
+    <title>Louis @ViewBag.Title</title>
+    <link href="~/css/Site.css" rel="stylesheet" asp-append-version="true" />
 </head>
 <body>
-    <div>
+    <header class="headerColumn">
+        <img id="logo" src="~/myLogo.jpg" height=2% width=2% />
+        <nav>
+            <ul class="headmenu">
+                <li class="listMenu"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="listMenu"><a asp-controller="Home" asp-action="About">About</a></li>
+                <li class="listMenu"><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                <li class="listMenu"><a asp-controller="Temperature" asp-action="Create">Create Temp</a></li>
+                <li class="listMenu"><a asp-controller="GuessGame" asp-action="GuessGame">Guessing Game</a></li>
+                <li class="listMenu"><a href="https://github.com/Louis-curtsky/Sokoban">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="main-content">
         @RenderBody()
     </div>
+    <footer class="footer" >
+        <span>&copy; Louis Skogen</span>
+    </footer>
 </body>
 </html>

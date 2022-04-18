@@ -16,6 +16,17 @@ namespace WebApplicationAsgn1
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // To allow Sessions and Cookies operations
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(5);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddMvc();
         }
 
@@ -30,12 +41,26 @@ namespace WebApplicationAsgn1
             app.UseStaticFiles();
             app.UseRouting();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "finalRoute",
-                    pattern: "{conntroller=Home}/{action=Index}/{id?}"
+                    name: "GuessGameRoute",
+                    pattern: "/GuessingGame",
+                    defaults: new { controller = "GuessGame", action = "GuessGame" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    name: "temperatureRoute",
+                    pattern: "Temperature/AddTemp",
+                    defaults: new  { controller="Temperature", action="Create" }
                  );
+                endpoints.MapControllerRoute(
+                    name: "finalRoute",
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                );
+
             });
         }
     }
