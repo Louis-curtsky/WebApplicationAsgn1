@@ -10,9 +10,8 @@ namespace WebApplicationAsgn1.Models
     {
         public int randNumSR;
         public int numberRight;
-        public int numberOfGuess;
-        public bool CorrectGuess;
-        public int PreviousHighest;
+        public bool ResetGuess=false;
+//        public int PreviousHighest;
         public string ShowMsg;
 
         public string GenerateNum()
@@ -31,7 +30,7 @@ namespace WebApplicationAsgn1.Models
             if (randNumsInt < guessInput)
                 ShowMsg = " is higher than the guessing number!!!";
 
-            numberOfGuess += 1;
+//            numberOfGuess += 1;
             return ShowMsg;
         }
         public bool GuessStart(string randNums, int guessInput)
@@ -42,9 +41,8 @@ namespace WebApplicationAsgn1.Models
             {
                 correctCount = true;
                 numberRight += 1;
-                CorrectGuess = true;
+                ResetGuess = true;
             }
-            numberOfGuess += 1;
             return correctCount;
         }
     }

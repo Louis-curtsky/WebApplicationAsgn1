@@ -5,7 +5,11 @@
 <hr />
 <table class="contact">
     <tr>
-        <th>Highest Score</th>
+        <th>Highest Score (No. of tries)</th>
+        <th>@ViewBag.CookieGuessNum</th>
+    </tr>
+    <tr>
+        <th>Number correct Guess</th>
         <th>@ViewBag.CookieHighest</th>
     </tr>
     <tr>
@@ -19,7 +23,7 @@
     <tr>
         <th>Message</th>
         <th>
-         <h3 class="@ViewBag.ColorCode">@ViewData["Msg"]</h3>
+            <h3 class="@ViewBag.ColorCode">@ViewData["Msg"]</h3>
         </th>
     </tr>
 </table>
