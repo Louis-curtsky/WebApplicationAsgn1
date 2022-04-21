@@ -31,7 +31,7 @@ namespace WebApplicationAsgn1.Models
             }                
         }
         public void Create() { }
-
+/*
         public string Gettemps(double temp)
         {
             if (TempType != "Celcius")
@@ -41,9 +41,10 @@ namespace WebApplicationAsgn1.Models
             tempStr = temp.ToString();
             return tempStr;
         }
+ */
         public string Gettemps(string tempType)
         {
-            string conType = "";
+            string conType = TempType;
             if (tempType != "ce")
             {
 //                temp = temp * 1.8 + 32;

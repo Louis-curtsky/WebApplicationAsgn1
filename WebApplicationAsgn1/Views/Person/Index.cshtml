@@ -1,0 +1,26 @@
+﻿@model List<Person>
+@{
+    ViewData["Title"] = "Persons - Index";
+}
+<h1>Person Information</h1>
+<hr />
+<table class="contact">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Telephone</th>
+        <th>City</th>
+    </tr>
+    <tbody>
+        @foreach (Person person in Model)
+        {
+        <tr>
+            <td>@person.FirstName</td>
+            <td>@person.LastName</td>
+            <td>@person.Phone</td>
+            <td>@person.City</td>
+        </tr>
+        }
+    </tbody>
+</table>
+
