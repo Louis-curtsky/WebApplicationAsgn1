@@ -24,5 +24,6 @@ namespace WebApplicationAsgn1.Models.Person
         [DataType(DataType.PhoneNumber)]
         public int Phone { get; set; }
 
+        public List<string> CityList { get; set; }
     }
 }

@@ -2,25 +2,37 @@
 @{
     ViewData["Title"] = "Persons - Index";
 }
-<h1>Person Information</h1>
 <hr />
-<table class="contact">
-    <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Telephone</th>
-        <th>City</th>
-    </tr>
-    <tbody>
-        @foreach (Person person in Model)
-        {
-        <tr>
-            <td>@person.FirstName</td>
-            <td>@person.LastName</td>
-            <td>@person.Phone</td>
-            <td>@person.City</td>
-        </tr>
-        }
-    </tbody>
+<h1>Person Information</h1>
+<ul class="breadcrumb">
+    <li>
+        <a asp-action="Create">Add Person</a>
+    </li>
+    <li>
+        <a asp-action="Searching">Search Person</a>
+    </li>
+    <li>
+        <a asp-action="Detail">Person Detail</a>
+    </li>
+</ul>
+<p> </p>
+<table class="contact show">
+  <tr>
+     <th>First Name</th>
+     <th>Last Name</th>
+     <th>Telephone</th>
+     <th>City</th>
+  </tr>
+  <tbody>
+     @foreach (Person person in Model)
+     {
+      <tr>
+      <td>@person.FirstName</td>
+      <td>@person.LastName</td>
+      <td>@person.Phone</td>
+      <td>@person.City</td>
+      </tr>
+      }
+  </tbody>
 </table>
 

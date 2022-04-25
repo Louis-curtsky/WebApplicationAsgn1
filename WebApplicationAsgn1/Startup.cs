@@ -43,8 +43,27 @@ namespace WebApplicationAsgn1
 
             app.UseSession();
 
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "PeopleRoute",
+                    pattern: "/People/AddPerson",
+                    defaults: new { controller = "Person", action = "Create" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    name: "PeopleRoute",
+                    pattern: "/People/SearchforPerson",
+                    defaults: new { controller = "Person", action = "Searching" }
+                    );
+
+                endpoints.MapControllerRoute(
+                    name: "PeopleRoute",
+                    pattern: "/People/DetailPerson",
+                    defaults: new { controller = "Person", action = "Detail" }
+                    );
+
                 endpoints.MapControllerRoute(
                     name: "GuessGameRoute",
                     pattern: "/GuessingGame",
@@ -55,11 +74,11 @@ namespace WebApplicationAsgn1
                     name: "temperatureRoute",
                     pattern: "Temperature/AddTemp",
                     defaults: new  { controller="Temperature", action="Create" }
-                 );
+                    );
                 endpoints.MapControllerRoute(
                     name: "finalRoute",
                     pattern: "{controller=Home}/{action=Index}/{id?}"
-                );
+                    );
 
             });
         }

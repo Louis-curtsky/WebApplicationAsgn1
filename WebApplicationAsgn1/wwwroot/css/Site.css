@@ -57,7 +57,7 @@ header {
 
 .main-content {
     grid-area: main-content;
-    width: 800px;
+    width: 650px;
     height: 600px;
 }
 
@@ -114,3 +114,80 @@ th{
         color: white;
     }
 
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=tel], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.button {
+    width: 100%;
+    padding: 15px 25px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color:darkslategrey;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+    .button:hover {
+        background-color:darkseagreen;
+    }
+
+    .button:active {
+        background-color: #3e8e41;
+        box-shadow: 0 3px #666;
+        transform: translateY(4px);
+    }
+
+div.inform {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+ul.breadcrumb {
+    padding: 10px 16px;
+    list-style: none;
+    background-color: #eee;
+}
+
+ul.breadcrumb li {
+   display: inline;
+   font-size: 18px;
+}
+
+ul.breadcrumb li + li:before {
+   padding: 8px;
+   color: black;
+   content: "/\00a0";
+}
+
+ul.breadcrumb li a {
+   color: #0275d8;
+   text-decoration: none;    
+}
+  
+ul.breadcrumb li a:hover {
+   color: #01447e;
+   text-decoration: underline;
+}
