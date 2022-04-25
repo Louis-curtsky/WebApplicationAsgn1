@@ -21,5 +21,19 @@ namespace WebApplicationAsgn1.Models.Person
 
         [Display(Name = "Contact Number")]
         public int Phone { get; set; }
+        public Person()
+        { }
+
+        public Person(string firstName, string lastName, string city, int phone)
+        {
+            FirstName=firstName;
+            LastName = lastName;
+            City = city;
+            Phone = phone;
+        }
+        public Person(int id, string firstName, string lastName, string city, int phone): this (firstName,lastName,city,phone)
+        {
+            Id = id;
+        }
     }
 }

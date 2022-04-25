@@ -7,7 +7,6 @@ namespace WebApplicationAsgn1.Models.Person
 {
     public interface IPeopleService
     {
-        Person Create(CreatePersonViewModel person);
         List<string> Getcities();
         List<Person> All();
         List<Person> Search(string search);

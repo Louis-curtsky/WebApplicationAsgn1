@@ -7,6 +7,7 @@ namespace WebApplicationAsgn1.Models.Person
 {
     interface IPeopleRepo
     {
+        Person Create(CreatePersonViewModel Person);
         List<Person> GetPersons();
         List<string> Getcitys();
         Person GetByID(int id);

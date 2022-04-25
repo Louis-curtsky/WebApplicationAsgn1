@@ -10,6 +10,7 @@ namespace WebApplicationAsgn1.Controllers
     public class PersonController : Controller
     {
         IPeopleService _peopleService;
+        IMemoryPeopleRepo _memoryPeople;
 
         public PersonController()
         {
@@ -19,6 +20,7 @@ namespace WebApplicationAsgn1.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            
             return View(_peopleService.All());
         }
 
@@ -57,7 +59,7 @@ namespace WebApplicationAsgn1.Controllers
         {
             if (ModelState.IsValid)
             {
-                _peopleService.Create(createPeople);
+                _memoryPeople.Create(createPeople);
                 return RedirectToAction("Index");
             }
 

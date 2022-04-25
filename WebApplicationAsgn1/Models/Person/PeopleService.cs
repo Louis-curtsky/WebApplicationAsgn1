@@ -7,45 +7,16 @@ namespace WebApplicationAsgn1.Models.Person
 {
     public class PeopleService : IPeopleService
     {
-        static int idCounter = 0;
         static List<Person> PeopleSearch = new List<Person>();
         static List<Person> peopleStorage = new List<Person>();
         static List<string> cityStorage = new List<string>();
-        public PeopleService()
-        {
-           if (cityStorage.Count == 0)
-            {
-                cityStorage.Add("Stockholm");
-                cityStorage.Add("Gothenburg");
-                cityStorage.Add("Malmö");
-                cityStorage.Add("Uppsala");
-                cityStorage.Add("Växjö");
-                cityStorage.Add("Västerås");
 
-                // Below Never put outside of if loop
-            peopleStorage.Add(new Person() { Id = idCounter++, FirstName = "Louis", LastName = "Lim", City = "Växjö", Phone = 0765551111 });
-            peopleStorage.Add(new Person() { Id = idCounter++, FirstName = "Michael", LastName = "Kent", City = "Gothenburg", Phone = 0733338888 });
-            peopleStorage.Add(new Person() { Id = idCounter++, FirstName = "Åsa", LastName = "Jason", City = "Malmö", Phone = 0721231234 });
-            }
-        }
 
         public List<string> Getcities()
         {
             return cityStorage;
         }
-        public Person Create(CreatePersonViewModel addPerson)
-        {
-            Person person = new Person { 
-                Id = idCounter++, 
-                FirstName = addPerson.FirstName, 
-                LastName = addPerson.LastName,
-                Phone = addPerson.Phone,
-                City = addPerson.City
-            };
-            peopleStorage.Add(person);
-            return person;
-        }
-
+ 
         public List<Person> All()
         {
             return peopleStorage;
