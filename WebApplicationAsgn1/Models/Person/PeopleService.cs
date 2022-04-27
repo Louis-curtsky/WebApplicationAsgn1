@@ -9,19 +9,18 @@ namespace WebApplicationAsgn1.Models.Person
     {
         static List<Person> PeopleSearch = new List<Person>();
         static List<Person> peopleStorage = new List<Person>();
-        static List<string> cityStorage = new List<string>();
 
-
-        public List<string> Getcities()
-        {
-            return cityStorage;
-        }
+        IMemoryPeopleRepo _PeopleRepo;
  
         public List<Person> All()
         {
-            return peopleStorage;
+            return _PeopleRepo.peopleStorage;
         }
 
+        public Person Add(string firstName, string lastName, string city, int phone)
+        {
+            return _PeopleRepo.Create(firstName, lastName, city, phone);
+        }
         public bool Edit(int id, CreatePersonViewModel person)
         {
             throw new NotImplementedException();
@@ -29,14 +28,7 @@ namespace WebApplicationAsgn1.Models.Person
 
         public Person FindById(int id)
         {
-            foreach (Person person in peopleStorage)
-            {
-                if (person.Id == id)
-                {
-                    return person;
-                }
-            }
-            return null;
+            return _PeopleRepo.GetByID(id);
 
         }
 

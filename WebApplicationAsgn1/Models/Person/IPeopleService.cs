@@ -7,7 +7,7 @@ namespace WebApplicationAsgn1.Models.Person
 {
     public interface IPeopleService
     {
-        List<string> Getcities();
+        Person Add(string firstName, string lastName, string city, int phone);
         List<Person> All();
         List<Person> Search(string search);
         Person FindById(int id);

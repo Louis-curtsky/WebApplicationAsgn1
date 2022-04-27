@@ -24,6 +24,14 @@ namespace WebApplicationAsgn1.Models.Person
         [DataType(DataType.PhoneNumber)]
         public int Phone { get; set; }
 
+        public List<Person> PeopleLists { get; set; }
+
         public List<string> CityList { get; set; }
+
+        public List<Person> PeopleIndexViewModel()
+        {
+            PeopleLists = new List<Person>();
+            return PeopleLists;
+        }
     }
 }

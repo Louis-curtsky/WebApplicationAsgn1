@@ -10,18 +10,25 @@ namespace WebApplicationAsgn1.Controllers
     public class PersonController : Controller
     {
         IPeopleService _peopleService;
-        IMemoryPeopleRepo _memoryPeople;
+        IPeopleRepo _memoryPeople;
 
         public PersonController()
         {
+            _memoryPeople = new IMemoryPeopleRepo();
             _peopleService = new PeopleService();
+            
         }
+        
 
         [HttpGet]
         public IActionResult Index()
         {
-            
-            return View(_peopleService.All());
+            if (! _memoryPeople.Initialize())
+            {
+                return View(_memoryPeople.GetPersons());
+            }
+            else
+                return View(_memoryPeople.All());
         }
 
         [HttpGet]
@@ -34,18 +41,22 @@ namespace WebApplicationAsgn1.Controllers
         public IActionResult Searching()
         {
             CreatePersonViewModel searchPeople = new CreatePersonViewModel();
-            searchPeople.CityList = _peopleService.Getcities();
+            searchPeople.CityList = _memoryPeople.Getcities();
 
             return View(searchPeople);
+        }
+
+        public IActionResult GetPersonList()
+        {
+            return PartialView("_PersonList", _memoryPeople.GetPersons());
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            CreatePersonViewModel createPeople = new CreatePersonViewModel();
-            createPeople.CityList = _peopleService.Getcities();
-
-            return View(createPeople);
+            CreatePersonViewModel createPerson = new CreatePersonViewModel();
+            createPerson.CityList = _memoryPeople.Getcities();
+            return View(createPerson);
         }
 
         [HttpGet]
@@ -59,11 +70,12 @@ namespace WebApplicationAsgn1.Controllers
         {
             if (ModelState.IsValid)
             {
-                _memoryPeople.Create(createPeople);
+         //                _memoryPeople.Initialize();
+                _peopleService.Add(createPeople.FirstName, createPeople.LastName, createPeople.City, createPeople.Phone);
                 return RedirectToAction("Index");
             }
 
-            createPeople.CityList = _peopleService.Getcities();
+            createPeople.CityList = _memoryPeople.Getcities();
 
             return View(createPeople);
         }
