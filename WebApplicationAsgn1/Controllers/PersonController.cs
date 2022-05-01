@@ -126,7 +126,7 @@ namespace WebApplicationAsgn1.Controllers
         public IActionResult Detail(int id)
         {
             List<Person> searchResult = _memoryPeople.GetByID(id);
-            return View(searchResult);
+            return PartialView (searchResult);
         }
 
         [HttpGet]
