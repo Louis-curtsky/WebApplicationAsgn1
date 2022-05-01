@@ -20,18 +20,18 @@ namespace WebApplicationAsgn1.Models.Person
         public string City { get; set; }
 
         [Display(Name = "Contact Number")]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
         public Person()
         { }
 
-        public Person(string firstName, string lastName, string city, int phone)
+        public Person(string firstName, string lastName, string city, string phone)
         {
             FirstName=firstName;
             LastName = lastName;
             City = city;
             Phone = phone;
         }
-        public Person(int id, string firstName, string lastName, string city, int phone): this (firstName,lastName,city,phone)
+        public Person(int id, string firstName, string lastName, string city, string phone): this (firstName,lastName,city,phone)
         {
             Id = id;
         }

@@ -10,15 +10,32 @@ namespace WebApplicationAsgn1.Models.Person
         static List<Person> PeopleSearch = new List<Person>();
         static List<Person> peopleStorage = new List<Person>();
 
+        IPeopleRepo _peopleRepo;
+
         IMemoryPeopleRepo _PeopleRepo;
- 
-        public List<Person> All()
+        
+        public PeopleService()
         {
-            return _PeopleRepo.peopleStorage;
+            if (_PeopleRepo == null) _PeopleRepo = new IMemoryPeopleRepo();
+            
         }
 
-        public Person Add(string firstName, string lastName, string city, int phone)
+         PeopleService(IPeopleRepo peopleRepo)
         {
+            _peopleRepo = peopleRepo;
+        }
+
+
+        public List<Person> All()
+        {
+            IMemoryPeopleRepo storage = new IMemoryPeopleRepo();
+            return storage.peopleStorage;
+         }
+
+        public Person Add(string firstName, string lastName, string city, string phone)
+        {
+//            IMemoryPeopleRepo addPerson = new IMemoryPeopleRepo();
+            
             return _PeopleRepo.Create(firstName, lastName, city, phone);
         }
         public bool Edit(int id, CreatePersonViewModel person)
@@ -28,38 +45,17 @@ namespace WebApplicationAsgn1.Models.Person
 
         public Person FindById(int id)
         {
-            return _PeopleRepo.GetByID(id);
+            List<Person> getByID = _peopleRepo.GetByID(id);
+            Person returnFound = getByID[0];
+            return returnFound;
 
         }
 
         public bool Remove(int id)
         {
-
-
-            return true;
+            return _peopleRepo.Delete(id);
         }
 
-        public List<Person> Search(string searches)
-        {
-//            List<Person> searchPerson = new List<Person>();
-            string[] searchList = searches.Split("|");
-            PeopleSearch.Clear();
-            foreach (Person person in peopleStorage)
-            {
-                if (person.FirstName == searchList[0] || person.LastName == searchList[1]
-                      || person.City == searchList[2])
-                {
-                    PeopleSearch.Add(person);
-                }
-
-            }
-
-            return PeopleSearch;
-        }
-
-        public List<Person> SearchResult()
-        {
-            return PeopleSearch;
-         }
+   
     }
 }

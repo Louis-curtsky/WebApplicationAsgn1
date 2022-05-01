@@ -9,7 +9,10 @@ namespace WebApplicationAsgn1.Controllers
 {
     public class PersonController : Controller
     {
-        IPeopleService _peopleService;
+        static bool Initialized;
+        Person Addperson = new Person();
+        List<Person> localStore = new List<Person>();
+        private readonly IPeopleService _peopleService;
         IPeopleRepo _memoryPeople;
 
         public PersonController()
@@ -21,14 +24,21 @@ namespace WebApplicationAsgn1.Controllers
         
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string firstName, string LastName, string city, string phone)
         {
-            if (! _memoryPeople.Initialize())
-            {
-                return View(_memoryPeople.GetPersons());
-            }
-            else
-                return View(_memoryPeople.All());
+            /*            if (Initialized)
+                        {
+                            return View(_memoryPeople.GetPersons(firstName, LastName, city, phone));
+                        }
+                        else
+                        {
+                            Initialized = _memoryPeople.Initialize();
+                            return View(_memoryPeople.All());
+                        }
+            */
+            Initialized = _memoryPeople.Initialize();
+
+            return View(_memoryPeople.All());
         }
 
         [HttpGet]
@@ -38,17 +48,14 @@ namespace WebApplicationAsgn1.Controllers
         }
 
         [HttpGet]
-        public IActionResult Searching()
+        public IActionResult GetCities()
         {
-            CreatePersonViewModel searchPeople = new CreatePersonViewModel();
-            searchPeople.CityList = _memoryPeople.Getcities();
-
-            return View(searchPeople);
+            return Json(_memoryPeople.Getcities());
         }
 
         public IActionResult GetPersonList()
         {
-            return PartialView("_PersonList", _memoryPeople.GetPersons());
+            return PartialView("_PersonList", _memoryPeople.All());
         }
 
         [HttpGet]
@@ -59,20 +66,23 @@ namespace WebApplicationAsgn1.Controllers
             return View(createPerson);
         }
 
-        [HttpGet]
-        public IActionResult SearchResult()
-        {
-            return View(_peopleService.SearchResult());
-        }
-
         [HttpPost]
         public IActionResult Create(CreatePersonViewModel createPeople)
         {
+            Person addPerson = new Person();
             if (ModelState.IsValid)
             {
-         //                _memoryPeople.Initialize();
-                _peopleService.Add(createPeople.FirstName, createPeople.LastName, createPeople.City, createPeople.Phone);
-                return RedirectToAction("Index");
+                addPerson =
+                    _peopleService.Add(createPeople.FirstName, createPeople.LastName, createPeople.City, createPeople.Phone);
+                //                _memoryPeople.Initialize();
+                return RedirectToAction("Index", new
+                {
+//                    id = addPerson.Id,
+                    firstName = addPerson.FirstName,
+                    lastName = addPerson.LastName,
+                    city = addPerson.City,
+                    phone = addPerson.Phone
+                });
             }
 
             createPeople.CityList = _memoryPeople.Getcities();
@@ -81,17 +91,81 @@ namespace WebApplicationAsgn1.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult Searching(CreatePersonViewModel searchPeople)
+        [HttpGet]
+        public IActionResult FindPerson(List<Person> searchResult)
         {
-          List<Person> peopleSearch = new List<Person>();
-          string seacrhString = searchPeople.FirstName + "|" + searchPeople.LastName + "|" + searchPeople.City;
-          peopleSearch =  _peopleService.Search(seacrhString);
-          if (peopleSearch != null)
-              return RedirectToAction("SearchResult");
-          else
-              return View();
+            List<Person> searchPerson = _memoryPeople.All();
+            if (searchResult.Count!=0)
+            return PartialView("_PersonDetailView", searchResult);
+            else
+            return View(searchPerson);
         }
 
+        [HttpPost]
+
+        public IActionResult FindPerson(int id)
+        {
+            List<Person>searchResult = _memoryPeople.GetByID(id);
+            return View(searchResult);
+        }
+
+        [HttpGet]
+        public IActionResult Details(List<Person> searchResult)
+        {
+            List<Person> person = _memoryPeople.All();
+
+            if (searchResult.Count == 0)
+            {
+                return View(person);
+            }
+            else
+                return View(searchResult);
+        }
+
+        [HttpPost]
+        public IActionResult Detail(int id)
+        {
+            List<Person> searchResult = _memoryPeople.GetByID(id);
+            return View(searchResult);
+        }
+
+        [HttpGet]
+        public IActionResult Searching(List<Person> peopleSearch)
+        {
+            List<Person> searchPerson = _memoryPeople.All();
+            if (peopleSearch.Count == 0)
+                return View(searchPerson);
+            else
+               return PartialView("_SearchResult",peopleSearch);
+        }
+
+        [HttpPost]
+
+        public IActionResult Searching(string firstName, string lastName, string city)
+        {
+//            firstName = "Louis";
+            List<Person> peopleSearch = new List<Person>();
+            peopleSearch = _memoryPeople.Search(firstName, lastName, city);
+            return View (peopleSearch);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            List<Person> searchPerson = _memoryPeople.GetByID(id);
+
+            if (searchPerson != null)
+            {
+                _memoryPeople.Delete(id);
+                return RedirectToAction(nameof(Index), new { 
+                    id = searchPerson[0].Id,
+                    firstName = searchPerson[0].FirstName, 
+                    lastName = searchPerson[0].LastName, 
+                    city = searchPerson[0].City, 
+                    phone = searchPerson[0].Phone 
+                });   
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

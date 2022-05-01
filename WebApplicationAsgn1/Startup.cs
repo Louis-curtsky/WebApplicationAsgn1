@@ -55,13 +55,13 @@ namespace WebApplicationAsgn1
                 endpoints.MapControllerRoute(
                     name: "PeopleRoute",
                     pattern: "/People/SearchforPerson",
-                    defaults: new { controller = "Person", action = "Searching" }
+                    defaults: new { controller = "Person", action = "FindPerson" }
                     );
 
                 endpoints.MapControllerRoute(
                     name: "PeopleRoute",
-                    pattern: "/People/DetailPerson",
-                    defaults: new { controller = "Person", action = "Detail" }
+                    pattern: "/People/FindThePerson",
+                    defaults: new { controller = "Person", action = "Searching" }
                     );
 
                 endpoints.MapControllerRoute(

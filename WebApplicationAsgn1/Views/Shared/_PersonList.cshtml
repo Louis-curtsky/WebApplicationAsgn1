@@ -1,19 +1,9 @@
 ﻿@model Person
 
-<tr>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Telephone</th>
-    <th>City</th>
-</tr>
-<tbody>
-    {
         <tr>
-            <td>person.FirstName</td>
-            <td>person.LastName</td>
-            <td>person.Phone</td>
-            <td>person.City</td>
+            <td>@Model.Id</td>
+            <td>@Model.FirstName</td>
+            <td>@Model.LastName</td>
+            <td>@Model.Phone</td>
+            <td>@Model.City</td>
         </tr>
-    }
-</tbody>
-</table>

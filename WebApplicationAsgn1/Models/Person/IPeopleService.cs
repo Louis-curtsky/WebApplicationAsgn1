@@ -7,13 +7,12 @@ namespace WebApplicationAsgn1.Models.Person
 {
     public interface IPeopleService
     {
-        Person Add(string firstName, string lastName, string city, int phone);
+        Person Add(string firstName, string lastName, string city, string phone);
         List<Person> All();
-        List<Person> Search(string search);
         Person FindById(int id);
+
         bool Edit(int id, CreatePersonViewModel person);
         bool Remove(int id);
-        List<Person> SearchResult();
         
     }
 }

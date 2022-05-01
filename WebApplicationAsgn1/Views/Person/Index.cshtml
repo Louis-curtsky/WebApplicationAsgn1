@@ -12,12 +12,13 @@
         <a asp-action="Searching">Search Person</a>
     </li>
     <li>
-        <a asp-action="Detail">Person Detail</a>
+        <a asp-action="FindPerson">Find by ID</a>
     </li>
 </ul>
 <p> </p>
-<table class="contact show">
+<table class="contact">
   <tr>
+      <th>ID Number</th>
      <th>First Name</th>
      <th>Last Name</th>
      <th>Telephone</th>
@@ -27,10 +28,7 @@
      @foreach (Person person in Model)
      {
       <tr>
-      <td>@person.FirstName</td>
-      <td>@person.LastName</td>
-      <td>@person.Phone</td>
-      <td>@person.City</td>
+          <partial name="_PersonList" model="person" />
       </tr>
       }
   </tbody>

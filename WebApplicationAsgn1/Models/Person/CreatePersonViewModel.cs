@@ -22,7 +22,7 @@ namespace WebApplicationAsgn1.Models.Person
 
         [Required(ErrorMessage = "Please enter Ypour Contact No")]
         [DataType(DataType.PhoneNumber)]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
         public List<Person> PeopleLists { get; set; }
 

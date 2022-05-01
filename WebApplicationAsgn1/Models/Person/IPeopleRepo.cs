@@ -5,16 +5,18 @@ using System.Threading.Tasks;
 
 namespace WebApplicationAsgn1.Models.Person
 {
-    interface IPeopleRepo
+    public interface IPeopleRepo
     {
         bool Initialize();
         List<Person> All();
-        Person Create(string firstName, string lastName, string city, int phone);
-        List<Person> GetPersons();
+        List<PersonViewModel> GetList();
+        Person Create(string firstName, string lastName, string city, string phone);
+        List<Person> GetPersons(string firstName, string lastName, string city, string phone);
         List<string> Getcities();
-        Person GetByID(int id);
+        List<Person> GetByID(int id);
 
-        bool Update(Person person);
-        bool Delete(Person person);
+        List<Person> Search(string firstName, string lastName, string city);
+        Person Update(Person person);
+        bool Delete(int id);
     }
 }
